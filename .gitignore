@@ -8,3 +8,9 @@ devel/
 logs/
 
 .vscode/
+
+src/pepper_robot
+
+src/naoqi_bridge_msgs
+
+src/naoqi_bridge
