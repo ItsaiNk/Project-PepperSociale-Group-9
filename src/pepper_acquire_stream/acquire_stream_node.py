@@ -11,7 +11,7 @@ class StreamController:
         self.br = CvBridge()
         self.pub = rospy.Publisher("take_image_topic", Image, queue_size=3)
         self.sub = rospy.Subscriber("head_movement_done", Bool, self.callback)
-        self.sub2 = rospy.Subscriber("take_image_topic", Image, self.show_frame)
+        #self.sub2 = rospy.Subscriber("take_image_topic", Image, self.show_frame)
         
 
     def callback(self, msg):
