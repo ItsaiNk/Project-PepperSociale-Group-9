@@ -7,14 +7,11 @@ from std_msgs.msg import Bool
 
 class StreamController:
     def __init__(self):
-        self.cap = cv.VideoCapture(0)
-        if not self.cap.isOpened():
-            print("Cannot open camera")
-            exit()
+        #self.cap = cv.VideoCapture(0)
         self.br = CvBridge()
-        self.frame = None
         self.pub = rospy.Publisher("take_image_topic", Image, queue_size=3)
         self.sub = rospy.Subscriber("head_movement_done", Bool, self.callback)
+        self.sub2 = rospy.Subscriber("take_image_topic", Image, self.show_frame)
         
 
     def callback(self, msg):
@@ -39,20 +36,26 @@ class StreamController:
         self.cap.release()
         cv.destroyAllWindows()
     
-    def show_frame(self):
-        cv.imshow("prova", self.frame)
+    def show_frame(self, msg):
+        img = self.br.imgmsg_to_cv2(msg)
+        cv.imshow("prova", img)
         cv.waitKey(0)  
         cv.destroyAllWindows()
             
     def take_frame(self):
+        cap = cv.VideoCapture(0)
+        if not cap.isOpened():
+            print("Cannot open camera")
+            exit()
         # Capture frame-by-frame
-        ret, self.frame = self.cap.read()
+        ret, frame = cap.read()
         # if frame is read correctly ret is True
         if not ret:
             print("Can't receive frame (stream end?). Exiting ...")
             exit()
-        self.cap.release()
-        self.show_frame() 
+        cap.release()
+        # self.cap.release()
+        self.pub.publish(self.br.cv2_to_imgmsg(frame))
 
 
 if __name__ == "__main__":
