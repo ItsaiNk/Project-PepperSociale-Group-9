@@ -4,13 +4,7 @@ import rospy
 from sensor_msgs.msg import Image
 from vision_msgs.msg import Detection2D, Detection2DArray, ObjectHypothesisWithPose
 from detector import Detector
-import ros_numpy # pip3 install git+https://github.com/eric-wieser/ros_numpy
-
-DET_PATH=os.path.join(os.path.dirname(__file__),'efficientdet_d1_coco17_tpu-32')
-mydetector = Detector(DET_PATH)
-
-rospy.init_node('detector_node')
-pub = rospy.Publisher('detection', Detection2DArray, queue_size=2)
+import ros_numpy
 
 
 def rcv_image(msg):
@@ -31,13 +25,13 @@ def rcv_image(msg):
     pub.publish(message)
     rospy.loginfo("published")
 
+#Initialize node
+DET_PATH=os.path.join(os.path.dirname(__file__),'efficientdet_d1_coco17_tpu-32')
+mydetector = Detector(DET_PATH)
 
+rospy.init_node('detector_node')
+
+pub = rospy.Publisher('detection', Detection2DArray, queue_size=2)
 si = rospy.Subscriber("take_image_topic", Image, rcv_image)
 
-
-
-try:
-    rospy.spin()
-
-except KeyboardInterrupt:
-    print("Shutting down")
+rospy.spin()

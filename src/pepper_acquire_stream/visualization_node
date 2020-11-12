@@ -4,14 +4,9 @@ import rospy
 from sensor_msgs.msg import Image
 from vision_msgs.msg import Detection2D, Detection2DArray, ObjectHypothesisWithPose
 import cv2
-import ros_numpy # pip3 install git+https://github.com/eric-wieser/ros_numpy
+import ros_numpy
 from threading import Lock
-from classmap import category_map as classmap # https://gist.github.com/xhlulu/f7735970704b97fd0b72203628c1cc77
-from cv_bridge import CvBridge
-
-rospy.init_node('visualization_node')
-image_lock = Lock()
-image = None
+from classmap import category_map as classmap
 
 def rcv_detection(msg):
     global image
@@ -45,14 +40,13 @@ def rcv_image(msg):
     image = ros_numpy.numpify(msg)
     image_lock.release()
 
+#Initialize node
+
+rospy.init_node('visualization_node')
+image_lock = Lock()
+image = None
 
 si = rospy.Subscriber("take_image_topic", Image, rcv_image)
 sd = rospy.Subscriber("detection", Detection2DArray, rcv_detection)
 
-
-try:
-    rospy.spin()
-
-except KeyboardInterrupt:
-    print("Shutting down")
-    
+rospy.spin()
