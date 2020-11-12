@@ -16,3 +16,7 @@ src/naoqi_bridge_msgs
 src/naoqi_bridge
 
 src/pepper_meshes/
+
+src/vision_msgs/
+
+src/pepper_acquire_stream/__pycache__/
