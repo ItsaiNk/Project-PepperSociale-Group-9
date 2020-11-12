@@ -11,7 +11,6 @@ class StreamController:
         if not self.cap.isOpened():
             print("Cannot open camera")
             exit()
-        cv.namedWindow("frame")
         self.br = CvBridge()
         self.frame = None
         self.pub = rospy.Publisher("take_image_topic", Image, queue_size=3)
@@ -41,9 +40,9 @@ class StreamController:
         cv.destroyAllWindows()
     
     def show_frame(self):
-        cv.imshow("frame", self.frame)
-        if cv.waitKey(1) == ord('q'):
-            cv.destroyAllWindows()
+        cv.imshow("prova", self.frame)
+        cv.waitKey(0)  
+        cv.destroyAllWindows()
             
     def take_frame(self):
         # Capture frame-by-frame
