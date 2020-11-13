@@ -12,6 +12,7 @@ find_package(catkin REQUIRED COMPONENTS
   std_msgs
   message_generation
   message_runtime
+  sensor_msgs
 )
 
 ## System dependencies are found with CMake's conventions
@@ -48,11 +49,11 @@ find_package(catkin REQUIRED COMPONENTS
 ##   * add every package in MSG_DEP_SET to generate_messages(DEPENDENCIES ...)
 
 ## Generate messages in the 'msg' folder
-# add_message_files(
-#   FILES
-#   Message1.msg
+add_message_files(
+  FILES
+  detector_msg.msg
 #   Message2.msg
-# )
+)
 
 ## Generate services in the 'srv' folder
 add_service_files(
@@ -71,7 +72,8 @@ add_service_files(
 generate_messages(
   DEPENDENCIES
   std_msgs
-  pepper_acquire_stream  # Or other packages containing msgs
+  pepper_acquire_stream
+  sensor_msgs  # Or other packages containing msgs
 )
 
 ################################################
@@ -106,7 +108,7 @@ generate_messages(
 catkin_package(
 #  INCLUDE_DIRS include
 #  LIBRARIES prova
-#  CATKIN_DEPENDS rospy
+#  CATKIN_DEPENDS rospy sensor_msgs
 #  DEPENDS system_lib
 )
 

@@ -11,9 +11,17 @@ class AnimatedSay(NaoqiNode):
         pass
         
     def say(self,data):
-        rospy.loginfo("START: %s" % data.message)
+        rospy.loginfo("START: %s %s", data.labels, data.position)
+        phrase = "I saw "
+        if len(data.labels) == 0:
+            phrase += "nothing "
+        else:
+            for label in data.labels:
+                phrase += "a " + label + ", "
+        phrase = phrase[:-2]
+        phrase += " on " + data.position
         #self.speech.say(data.message)
-        rospy.loginfo("END: %s" % data.message)
+        rospy.loginfo("END: %s", phrase)
         return SayResponse(True)
 
     def connectNaoQi(self):
