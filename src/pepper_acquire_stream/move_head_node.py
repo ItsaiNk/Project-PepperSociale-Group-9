@@ -11,7 +11,6 @@ class HeadController():
         self.s.joint_names=['HeadPitch', 'HeadYaw']
         self.s.relative=0
         self.s.speed=0.2
-        self.rate = rospy.Rate(0.2)
         self.pub_pepper = rospy.Publisher('/pepper_robot/pose/joint_angles', JointAnglesWithSpeed, queue_size=0)
         self.pub_node = rospy.Publisher('head_movement_done', Bool, queue_size=1)
         self.sub = rospy.Subscriber('head_movement_start', String, self.move_head_listener)
@@ -28,7 +27,7 @@ class HeadController():
         self.s.joint_angles=[pitch, yaw]
         rospy.loginfo(self.s.joint_angles)
         self.pub_pepper.publish(self.s)
-        self.rate.sleep()
+        rospy.sleep(rospy.Duration(5.0))
         self.pub_node.publish(True)
 
 

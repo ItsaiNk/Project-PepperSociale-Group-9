@@ -10,13 +10,15 @@ class StreamController:
     def __init__(self):
         self.br = CvBridge()
         self.pub_img = rospy.Publisher("take_image_topic", Image, queue_size=3)
-        self.pub_head_node = rospy.Publisher("head_movement_start", String, queue_size=0)
+        self.pub_head_node = rospy.Publisher("head_movement_start", String, queue_size=1)
         self.sub = rospy.Subscriber("head_movement_done", Bool, self.callback)        
         self.count = 0
+        self.next_position = None
 
     def callback(self, msg):
-        if msg.data and self.count < 3:
-            self.take_frame()
+        if msg.data:
+            if self.count < 3:
+                self.take_frame()
             
     def take_frame(self):
         cap = cv.VideoCapture(0)
@@ -30,17 +32,17 @@ class StreamController:
             print("Can't receive frame (stream end?). Exiting ...")
             exit()
         cap.release()
-        next_position = self.head_position_update()
+        self.next_position = self.head_position_update()
+        self.count += 1
         self.pub_img.publish(self.br.cv2_to_imgmsg(frame))
-        self.pub_head_node.publish(next_position)
+        self.pub_head_node.publish(self.next_position)
 
     def head_position_update(self):
-        self.count += 1
-        if self.count == 1:
+        if self.count == 0:
             return "left"
-        elif self.count == 2:
+        elif self.count == 1:
             return "right"
-        elif self.count == 3:
+        elif self.count == 2:
             return "reset"
 
 if __name__ == "__main__":
