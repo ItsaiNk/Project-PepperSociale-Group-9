@@ -20,7 +20,7 @@ class AnimatedSay(NaoqiNode):
                 phrase += "a " + label + ", "
         phrase = phrase[:-2]
         phrase += " on " + data.position
-        #self.speech.say(data.message)
+        self.speech.say(phrase)
         rospy.loginfo("END: %s", phrase)
         return SayResponse(True)
 
