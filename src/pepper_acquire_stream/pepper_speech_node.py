@@ -13,12 +13,24 @@ class AnimatedSay(NaoqiNode):
     def say(self,data):
         rospy.loginfo("START: %s %s", data.labels, data.position)
         phrase = "I saw "
+        label_occ = {}
         if len(data.labels) == 0:
             phrase += "nothing "
         else:
             for label in data.labels:
-                phrase += "a " + label + ", "
-        phrase = phrase[:-2]
+                if label not in label_occ.keys():
+                    label_occ[label] = 1
+                else:
+                    label_occ[label] += 1
+            for label, occ in label_occ.items():
+                if occ == 1:
+                    phrase += "a " + label + ", "
+                else:
+                    phrase += str(occ) +" " + label + ", "
+            phrase = phrase[:-2]
+            if ',' in phrase:
+                head, _sep, tail = phrase.rpartition(',')
+                phrase = head + " and" + tail
         phrase += " on " + data.position
         self.speech.say(phrase)
         rospy.loginfo("END: %s", phrase)
