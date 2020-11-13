@@ -25,7 +25,7 @@ class AnimatedSay(NaoqiNode):
         return SayResponse(True)
 
     def connectNaoQi(self):
-        #self.speech=self.get_proxy("ALAnimatedSpeech")
+        self.speech=self.get_proxy("ALAnimatedSpeech")
         self.s = rospy.Service('animated_say', Say, self.say)
 
 if __name__=="__main__":
