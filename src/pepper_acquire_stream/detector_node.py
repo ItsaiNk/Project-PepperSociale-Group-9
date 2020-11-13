@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 import os
 import rospy
-from sensor_msgs.msg import Image
 from pepper_acquire_stream.msg import detector_msg
 from vision_msgs.msg import Detection2D, Detection2DArray, ObjectHypothesisWithPose
 from detector import Detector
@@ -47,7 +46,6 @@ mydetector = Detector(DET_PATH)
 rospy.init_node('detector_node')
 
 pub = rospy.Publisher('detection', Detection2DArray, queue_size=3)
-#si = rospy.Subscriber("take_image_topic", Image, rcv_image)
 si = rospy.Subscriber("take_image_topic", detector_msg, rcv_image)
 
 rospy.spin()

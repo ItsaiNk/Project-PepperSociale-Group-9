@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 import os
 import rospy
-from sensor_msgs.msg import Image
+from pepper_acquire_stream.msg import detector_msg
 from vision_msgs.msg import Detection2D, Detection2DArray, ObjectHypothesisWithPose
 import cv2
 import ros_numpy
@@ -37,7 +37,7 @@ def rcv_image(msg):
     global image
     rospy.loginfo('image here')
     image_lock.acquire()
-    image = ros_numpy.numpify(msg)
+    image = ros_numpy.numpify(msg.image)
     image_lock.release()
 
 #Initialize node
@@ -46,7 +46,7 @@ rospy.init_node('visualization_node')
 image_lock = Lock()
 image = None
 
-si = rospy.Subscriber("take_image_topic", Image, rcv_image)
+si = rospy.Subscriber("take_image_topic", detector_msg, rcv_image)
 sd = rospy.Subscriber("detection", Detection2DArray, rcv_detection)
 
 rospy.spin()

@@ -1,6 +1,5 @@
 #!/usr/bin/env python
 import cv2 as cv
-#from sensor_msgs.msg import Image
 from pepper_acquire_stream.msg import detector_msg
 from cv_bridge import CvBridge
 import rospy
@@ -21,23 +20,6 @@ class StreamController:
         if msg.data:
             if self.count < 3:
                 self.take_frame()
-            
-    # def take_frame(self):
-    #     cap = cv.VideoCapture(0)
-    #     if not cap.isOpened():
-    #         print("Cannot open camera")
-    #         exit()
-    #     # Capture frame-by-frame
-    #     ret, frame = cap.read()
-    #     # if frame is read correctly ret is True
-    #     if not ret:
-    #         print("Can't receive frame (stream end?). Exiting ...")
-    #         exit()
-    #     cap.release()
-    #     self.next_position = self.head_position_update()
-    #     self.count += 1
-    #     self.pub_img.publish(self.br.cv2_to_imgmsg(frame))
-    #     self.pub_head_node.publish(self.next_position)
     
     def take_frame(self):
         cap = cv.VideoCapture(0)
