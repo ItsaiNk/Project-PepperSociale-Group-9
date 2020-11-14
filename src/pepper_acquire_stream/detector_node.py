@@ -32,11 +32,11 @@ def rcv_image(msg):
         o.id = clabel
         d.results.append(o)
         message.detections.append(d)
-    pub.publish(message)
     detected_classes = []
     for c in detections['detection_classes']:
         detected_classes.append(classmap[c])
     animated_say_client(detected_classes, msg.position)
+    pub.publish(message)
     rospy.loginfo("published")
 
 #Initialize node
