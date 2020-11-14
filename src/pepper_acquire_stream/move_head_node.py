@@ -32,6 +32,6 @@ class HeadController():
 
 
 if __name__=='__main__':
-    rospy.init_node('test')
+    rospy.init_node('pepper_move_head')
     controller = HeadController()
     rospy.spin()
