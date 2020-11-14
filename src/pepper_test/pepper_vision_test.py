@@ -21,10 +21,10 @@ class Vision(NaoqiNode):
         framerate = 5
         color_space = 11
         self.nameId = self.vision.subscribeCamera("pepper_rgb_camera", kTopCamera, resolution, color_space, framerate)
-        rospy.loginfo('Using camera: depth camera. Subscriber name is %s .' % (self.nameId))
+        rospy.loginfo('Using camera: rgb camera. Subscriber name is %s .' % (self.nameId))
         self.s = rospy.Service('vision', Shot, self.shot)
 
-    def shot(self):
+    def shot(self, data=None):
         img_to_send = Image()
         image = self.vision.getImageRemote(self.nameId)
         img_to_send.header.stamp = rospy.Time.now()
