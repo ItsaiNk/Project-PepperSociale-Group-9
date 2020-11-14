@@ -20,9 +20,6 @@ class Vision(NaoqiNode):
         resolution = 1
         framerate = 5
         color_space = 11
-        # resolution = rospy.get_param("~resolution", 1)  #320x240
-        # framerate  = rospy.get_param("~fps", 5)
-        # color_space= rospy.get_param("~color_space", 11) # RGB
         self.nameId = self.vision.subscribeCamera("pepper_rgb_camera", kTopCamera, resolution, color_space, framerate)
         rospy.loginfo('Using camera: depth camera. Subscriber name is %s .' % (self.nameId))
         self.s = rospy.Service('vision', Shot, self.shot)
