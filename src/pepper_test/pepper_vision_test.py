@@ -14,7 +14,7 @@ class Vision(NaoqiNode):
 
     def connectNaoQi(self):
         self.vision=self.get_proxy("ALVideoDevice")
-        if self.vision in None:
+        if self.vision is None:
             exit(1)
         kTopCamera = 0
         resolution = 1
@@ -24,9 +24,9 @@ class Vision(NaoqiNode):
         rospy.loginfo('Using camera: depth camera. Subscriber name is %s .' % (self.nameId))
         self.s = rospy.Service('vision', Shot, self.shot)
 
-    def self.shot(self):
+    def shot(self):
         img_to_send = Image()
-        image = self.camProxy.getImageRemote(self.nameId)
+        image = self.vision.getImageRemote(self.nameId)
         img_to_send.header.stamp = rospy.Time.now()
         img_to_send.height = image[1]
         img_to_send.width = image[0]
