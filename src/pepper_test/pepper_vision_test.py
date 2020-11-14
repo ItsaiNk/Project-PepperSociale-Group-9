@@ -7,7 +7,7 @@ from sensor_msgs.msg import Image
 
 class Vision(NaoqiNode):
     def __init__(self):
-        NaoqiNode.__init__(self,'vision')
+        NaoqiNode.__init__(self,'pepper_vision')
         self.nameId = None
         self.connectNaoQi()
         pass
