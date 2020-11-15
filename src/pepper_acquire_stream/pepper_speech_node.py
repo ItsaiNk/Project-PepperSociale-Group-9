@@ -31,7 +31,10 @@ class AnimatedSay(NaoqiNode):
             if ',' in phrase:
                 head, _sep, tail = phrase.rpartition(',')
                 phrase = head + " and" + tail
-        phrase += " on " + data.position
+        if data.position == "center":
+            phrase += " in front of me"
+        else:
+            phrase += " on the" + data.position
         #self.speech.say(data.message)
         rospy.loginfo("END: %s", phrase)
         return SayResponse(True)
