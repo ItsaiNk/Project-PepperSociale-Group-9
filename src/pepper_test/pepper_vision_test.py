@@ -22,7 +22,7 @@ class Vision(NaoqiNode):
         color_space = 11
         self.nameId = self.vision.subscribeCamera("pepper_rgb_camera", kTopCamera, resolution, color_space, framerate)
         rospy.loginfo('Using camera: rgb camera. Subscriber name is %s .' % (self.nameId))
-        self.s = rospy.Service('vision', Shot, self.shot)
+        self.s = rospy.Service('pepper_vision_service', Shot, self.shot)
 
     def shot(self, data=None):
         img_to_send = Image()
@@ -34,6 +34,7 @@ class Vision(NaoqiNode):
         img_to_send.encoding = "8UC3" #8 unsigned bit 3 channel
         img_to_send.step = img_to_send.width * layers
         img_to_send.data = image[6]
+        rospy.loginfo('Sending image...')
         return ShotResponse(img_to_send)
         
 if __name__=="__main__":
