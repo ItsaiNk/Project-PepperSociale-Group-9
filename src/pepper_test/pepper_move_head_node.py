@@ -1,8 +1,7 @@
 #!/usr/bin/env python
 import rospy
 from naoqi_driver.naoqi_node import NaoqiNode
-from std_msgs.msg import Bool
-from std_msgs.msg import String
+from std_msgs.msg import Bool, String
 from naoqi_bridge_msgs.msg import JointAnglesWithSpeed
 
 class HeadController(NaoqiNode):
@@ -16,7 +15,6 @@ class HeadController(NaoqiNode):
         self.s.speed=0.2
         self.pub_pepper = rospy.Publisher('/pepper_robot/pose/joint_angles', JointAnglesWithSpeed, queue_size=0)
         self.pub_node = rospy.Publisher('head_movement_done', Bool, queue_size=1)
-        #self.move_head(0.0, 0.0, False)
         self.sub = rospy.Subscriber('head_movement_start', String, self.move_head_listener)
 
     def connectNaoQi(self):

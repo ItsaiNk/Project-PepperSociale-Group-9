@@ -3,13 +3,13 @@ import cv2 as cv
 from pepper_acquire_stream.msg import detector_msg
 from cv_bridge import CvBridge
 import rospy
+from pepper_test.srv import Shot, ShotResponse
 from std_msgs.msg import Bool
 from std_msgs.msg import String
 
 class StreamController:
     def __init__(self):
         self.br = CvBridge()
-        #self.pub_img = rospy.Publisher("take_image_topic", Image, queue_size=3)
         self.pub_img = rospy.Publisher("take_image_topic", detector_msg, queue_size=3)
         self.pub_head_node = rospy.Publisher("head_movement_start", String, queue_size=1)
         self.sub = rospy.Subscriber("head_movement_done", Bool, self.callback)        
@@ -22,9 +22,9 @@ class StreamController:
                 self.take_frame()
     
     def pepper_vision_client():
-        rospy.wait_for_service("pepper_vision")
+        rospy.wait_for_service("pepper_vision_service")
         try:
-            pepper_vision = rospy.ServiceProxy('pepper_vision', Shot)
+            pepper_vision = rospy.ServiceProxy('pepper_vision_service', Shot)
             resp = pepper_vision()
             return resp.image
         except rospy.ServiceException as e:

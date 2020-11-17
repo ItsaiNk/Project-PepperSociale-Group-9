@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<launch>
+    <arg name="pip" default="--pip 10.0.1.230" />
+    <include file="$(find pepper_bringup)/launch/pepper_full_py.launch">
+        <arg name="nao_ip" value="10.0.1.230"/>
+    </include>
+    <node name="pepper_start" pkg="pepper_group9" type="pepper_start.py" output="screen" />
+    <node name="pepper_vision" pkg="pepper_group9" type="pepper_vision.py" output="screen" args="$(arg pip)"/>
+    <node name="pepper_wakeup" pkg="pepper_group9" type="pepper_wakeup.py" output="screen" args="$(arg pip)"/>
+    <node name="pepper_speech" pkg="pepper_group9" type="pepper_speech.py" output="screen" args="$(arg pip)"/>
+    <node name="pepper_move_head" pkg="pepper_group9" type="pepper_move_head.py" output="screen" />
+    <node name="detector_node" pkg="pepper_group9" type="detector_node.py" output="screen" />
+</launch>

@@ -10,6 +10,7 @@ class Vision(NaoqiNode):
         NaoqiNode.__init__(self,'pepper_vision')
         self.nameId = None
         self.connectNaoQi()
+        self.pub_img = rospy.Publisher("take_image_topic", detector_msg, queue_size=3)
         pass
 
     def connectNaoQi(self):
@@ -34,7 +35,9 @@ class Vision(NaoqiNode):
         img_to_send.encoding = "8UC3" #8 unsigned bit 3 channel
         img_to_send.step = img_to_send.width * layers
         img_to_send.data = image[6]
+        self.pub_img.publish(img_to_send)
         rospy.loginfo('Sending image...')
+
         return ShotResponse(img_to_send)
         
 if __name__=="__main__":
