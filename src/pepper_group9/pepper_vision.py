@@ -9,7 +9,6 @@ class Vision(NaoqiNode):
         NaoqiNode.__init__(self,'pepper_vision')
         self.nameId = None
         self.connectNaoQi()
-        pass
 
     def connectNaoQi(self):
         self.vision=self.get_proxy("ALVideoDevice")
@@ -35,9 +34,13 @@ class Vision(NaoqiNode):
         img_to_send.data = image[6]
         rospy.loginfo('Sending image...')
         return ShotResponse(img_to_send)
+    
+    def shutdown_handle(self):
+        self.vision.unsubscribe(self.nameId)
         
 if __name__=="__main__":
     vision_node = Vision()
+    rospy.on_shutdown(vision_node.shutdown_handle)
     rospy.spin()
 
 
