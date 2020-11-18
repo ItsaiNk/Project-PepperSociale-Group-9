@@ -51,7 +51,7 @@ class PepperStart():
             msg.image = img
             self.pub_take_image.publish(msg)
             self.count += 1
-            self.pub_head_move(self.get_head_position())
+            self.pub_head_move.publish(self.get_head_position())
         else:
             self.pepper_stiffness_client(False)
 
