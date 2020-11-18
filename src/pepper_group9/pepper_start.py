@@ -12,6 +12,7 @@ class PepperStart():
         self.pub_take_image = rospy.Publisher("take_image_topic", DetectorMessage, queue_size=3)
         self.count = 0
         self.pepper_stiffness_client(True)
+        rospy.on_shutdown(self.shutdown_handle)
         #self.pub_head_move.publish("reset")
 
     def pepper_stiffness_client(self, flag):
@@ -53,7 +54,10 @@ class PepperStart():
             self.count += 1
             self.pub_head_move.publish(self.get_head_position())
         else:
-            self.pepper_stiffness_client(False)
+            self.count = 0
+
+    def shutdown_handle(self):
+        self.pepper_stiffness_client(False)
 
 
 if __name__ == "__main__":

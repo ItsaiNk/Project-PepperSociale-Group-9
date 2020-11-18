@@ -11,7 +11,7 @@ class StiffnessController(NaoqiNode):
         self.service = rospy.Service("pepper_stiffness_service", StiffnessSrv, self.set_stiffness)
 
     def set_stiffness(self, flag):
-        if flag.data:
+        if flag.request:
             self.motion.wakeUp()
         else:
             self.motion.rest()
