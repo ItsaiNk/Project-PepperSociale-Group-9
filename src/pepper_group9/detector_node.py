@@ -43,7 +43,7 @@ DET_PATH=os.path.join(os.path.dirname(__file__),'efficientdet_d1_coco17_tpu-32')
 mydetector = Detector(DET_PATH)
 
 rospy.init_node('detector_node')
-
+rospy.loginfo("Detector avviato correttamente")
 si = rospy.Subscriber("take_image_topic", DetectorMessage, rcv_image)
 
 rospy.spin()

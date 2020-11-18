@@ -59,4 +59,4 @@ class PepperStart():
 if __name__ == "__main__":
     rospy.init_node("pepper_start")
     start = PepperStart()
-    rospy.spin
+    rospy.spin()

@@ -34,7 +34,7 @@ class AnimatedSay(NaoqiNode):
             phrase += " in front of me"
         else:
             phrase += " on the" + data.position
-        self.speech.say(data.message)
+        self.speech.say(phrase)
         rospy.loginfo("END: %s", phrase)
         return SayResponse(True)
 

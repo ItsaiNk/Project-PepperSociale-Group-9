@@ -1,3 +1,4 @@
-string message
+string[] labels
+string position
 ---
 bool result
