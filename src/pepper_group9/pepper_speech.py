@@ -1,8 +1,7 @@
 #!/usr/bin/python
 import rospy
 from naoqi_driver.naoqi_node import NaoqiNode
-from pepper_acquire_stream.srv import Say
-from pepper_acquire_stream.srv import SayResponse
+from pepper_group9.srv import Say, SayResponse
 
 class AnimatedSay(NaoqiNode):
     def __init__(self):
@@ -31,7 +30,10 @@ class AnimatedSay(NaoqiNode):
             if ',' in phrase:
                 head, _sep, tail = phrase.rpartition(',')
                 phrase = head + " and" + tail
-        phrase += " on " + data.position
+        if data.position == "center":
+            phrase += " in front of me"
+        else:
+            phrase += " on the " + data.position
         self.speech.say(phrase)
         rospy.loginfo("END: %s", phrase)
         return SayResponse(True)
@@ -41,5 +43,5 @@ class AnimatedSay(NaoqiNode):
         self.s = rospy.Service('animated_say', Say, self.say)
 
 if __name__=="__main__":
-    pub = AnimatedSay()
+    say = AnimatedSay()
     rospy.spin()
