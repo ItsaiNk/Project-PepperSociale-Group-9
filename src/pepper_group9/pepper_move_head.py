@@ -16,9 +16,9 @@ class HeadController():
 
     def move_head_listener(self, msg):
         if msg.data == "left":
-            self.move_head(0.2, 1.0)
+            self.move_head(0.2, 0.9)
         elif msg.data == "right":
-            self.move_head(0.2, -1.0)
+            self.move_head(0.2, -0.9)
         elif msg.data == "reset":
             self.move_head(0.2, 0.0)
 

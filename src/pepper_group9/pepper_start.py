@@ -42,7 +42,6 @@ class PepperStart():
         elif self.count == 3:
             return "reset"
 
-
     def controller(self, data):
         if self.count < 3:
             img = self.take_photo()
@@ -54,10 +53,6 @@ class PepperStart():
             self.pub_head_move.publish(self.get_head_position())
         else:
             self.count = 0
-
-    def shutdown_handle(self):
-        self.pepper_stiffness_client(False)
-
 
 if __name__ == "__main__":
     rospy.init_node("pepper_start")
