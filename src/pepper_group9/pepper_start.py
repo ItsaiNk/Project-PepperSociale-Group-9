@@ -19,7 +19,9 @@ class PepperStart():
         try:
             pepper_stiffness = rospy.ServiceProxy('pepper_stiffness_service', StiffnessSrv)
             resp = pepper_stiffness(flag)
-            return resp.response
+            if not resp.response:
+                rospy.logerr("Error in robot wakeup!")
+                exit(1)
         except rospy.ServiceException as e:
             print("Service call failed: %s"%e)
 
