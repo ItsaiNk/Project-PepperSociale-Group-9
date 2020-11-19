@@ -13,11 +13,12 @@ class StiffnessController(NaoqiNode):
     def set_stiffness(self, flag):
         if flag.request:
             self.motion.wakeUp()
-        else:
-            self.motion.rest()
+            return StiffnessSrvResponse(True)
         
-        return StiffnessSrvResponse(True)
+    def shutdown_handle(self): 
+        self.motion.rest()
 
 if __name__=="__main__":
     controller = StiffnessController()
+    rospy.on_shutdown(controller.shutdown_handle)
     rospy.spin()
