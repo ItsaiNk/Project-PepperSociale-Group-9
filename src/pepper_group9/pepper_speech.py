@@ -34,12 +34,12 @@ class AnimatedSay(NaoqiNode):
             phrase += " in front of me"
         else:
             phrase += " on the " + data.position
-        self.speech.say(phrase)
+        self.speech.say(phrase, "English")
         rospy.loginfo("END: %s", phrase)
         return SayResponse(True)
 
     def connectNaoQi(self):
-        self.speech=self.get_proxy("ALAnimatedSpeech")
+        self.speech=self.get_proxy("ALTextToSpeech")
         self.s = rospy.Service('animated_say', Say, self.say)
 
 if __name__=="__main__":
