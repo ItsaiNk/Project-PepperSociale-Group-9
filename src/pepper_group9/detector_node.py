@@ -7,6 +7,12 @@ from pepper_group9.srv import Say
 import ros_numpy
 from classmap import category_map as classmap
 
+# Calls the service "animated_say",
+# which lets Pepper say something you want 
+# param: labels - Specifies the labels of the objects detected by Pepper
+# param: position - Specifies where the objects are located in the scene (left, right or center)
+# returns: a Bool representing the success of the operation
+# throws: rospy.ServiceException if service call failed
 def animated_say_client(labels, position):
     rospy.wait_for_service('animated_say')
     try:
@@ -16,6 +22,10 @@ def animated_say_client(labels, position):
     except rospy.ServiceException as e:
         print("Service call failed: %s"%e)
 
+# Receives an image and executes an object detection
+# It uses the classmap in the file classmap.py to map the detected objects with the correct label
+# param: msg - The message containing the Image on which perform the detection
+# throws: rospy.ServiceException if service call failed
 def rcv_image(msg):
     image = ros_numpy.numpify(msg.image)
     detections = mydetector(image)
@@ -25,7 +35,7 @@ def rcv_image(msg):
     animated_say_client(detected_classes, msg.position)
 
 
-#Initialize node
+# Initializes node with name "detector_node"
 DET_PATH=os.path.join(os.path.dirname(__file__),'efficientdet_d1_coco17_tpu-32')
 mydetector = Detector(DET_PATH)
 rospy.init_node('detector_node')

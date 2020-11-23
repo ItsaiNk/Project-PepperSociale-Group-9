@@ -1,0 +1,3 @@
+<launch>
+    <node name="detector_node" pkg="pepper_group9" type="detector_node.py" output="screen" />
+</launch>
