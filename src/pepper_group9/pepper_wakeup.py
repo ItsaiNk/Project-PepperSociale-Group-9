@@ -13,6 +13,8 @@ class StiffnessController(NaoqiNode):
     def set_stiffness(self, flag):
         if flag.request:
             self.motion.wakeUp()
+        else:
+            self.motion.rest()
         return self.motion.robotIsWakeUp()
         
     def shutdown_handle(self): 
