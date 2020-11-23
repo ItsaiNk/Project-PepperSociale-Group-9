@@ -2,6 +2,7 @@
 import os
 import rospy
 from pepper_group9.msg import DetectorMessage
+from std_msgs.msg import Bool
 from detector import Detector
 from pepper_group9.srv import Say
 import ros_numpy
@@ -36,9 +37,13 @@ def rcv_image(msg):
 
 
 # Initializes node with name "detector_node"
-DET_PATH=os.path.join(os.path.dirname(__file__),'efficientdet_d1_coco17_tpu-32')
+pub = rospy.Publisher("detector_loaded", Bool, queue_size=1)
+#DET_PATH=os.path.join(os.path.dirname(__file__),'efficientdet_d1_coco17_tpu-32')
+DET_PATH=os.path.join(os.path.dirname(__file__),'ssd_mobilenet_v2_fpnlite_640x640_coco17_tpu-8')
 mydetector = Detector(DET_PATH)
 rospy.init_node('detector_node')
 si = rospy.Subscriber("take_image_topic", DetectorMessage, rcv_image)
 rospy.loginfo("Detector node successfully started")
+rospy.sleep(0.01)
+pub.publish(True)
 rospy.spin()

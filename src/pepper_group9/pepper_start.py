@@ -19,10 +19,14 @@ class PepperStart():
         self.pub_head_move = rospy.Publisher("head_movement_start", String, queue_size=3)
         self.sub_movement_done = rospy.Subscriber("head_movement_done", Bool, self.controller)
         self.pub_take_image = rospy.Publisher("take_image_topic", DetectorMessage, queue_size=3)
+        self.sub_detector_done = rospy.Subscriber("detector_loaded", Bool, self.detector_loaded)
         self.count = 0
         self.pepper_stiffness_client()
-        self.pub_head_move.publish("reset")
 
+    def detector_loaded(self,msg):
+        if msg.data:
+            self.pub_head_move.publish("reset")
+            
     # Calls the service "pepper_stiffness_service",
     # which wakes up Pepper 
     # error: if the service response is False (Pepper is in rest)

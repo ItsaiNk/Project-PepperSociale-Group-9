@@ -52,7 +52,7 @@ class AnimatedSay(NaoqiNode):
     # ALTextToSpeech module allows the robot to speak.
     # It sends commands to a text-to-speech engine, and authorizes also 
     # voice customization. The result of the synthesis is sent to the 
-    # robot’s loudspeakers.
+    # robot's loudspeakers.
     #
     # Creation of "animated_say" Service
     def connectNaoQi(self):
