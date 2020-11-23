@@ -49,4 +49,5 @@ class HeadController():
 if __name__=='__main__':
     rospy.init_node("head_movement_controller")
     controller = HeadController()
+    rospy.loginfo("Head Controller node successfully started")
     rospy.spin()

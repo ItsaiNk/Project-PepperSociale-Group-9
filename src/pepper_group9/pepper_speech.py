@@ -61,4 +61,5 @@ class AnimatedSay(NaoqiNode):
 
 if __name__=="__main__":
     say = AnimatedSay()
+    rospy.loginfo("Animated Speech node successfully started")
     rospy.spin()

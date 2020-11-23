@@ -35,4 +35,5 @@ class StiffnessController(NaoqiNode):
 if __name__=="__main__":
     controller = StiffnessController()
     rospy.on_shutdown(controller.shutdown_handle)
+    rospy.loginfo("Pepper Stiffness node successfully started")
     rospy.spin()

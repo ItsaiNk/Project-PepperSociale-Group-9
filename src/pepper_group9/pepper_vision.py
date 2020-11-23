@@ -61,6 +61,7 @@ class Vision(NaoqiNode):
 if __name__=="__main__":
     vision_node = Vision()
     rospy.on_shutdown(vision_node.shutdown_handle)
+    rospy.loginfo("Pepper Vision node successfully started")
     rospy.spin()
 
 
