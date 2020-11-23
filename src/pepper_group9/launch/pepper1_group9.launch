@@ -5,8 +5,8 @@
         <arg name="nao_ip" value="10.0.1.207"/>
     </include>
 
-    <include file="$(find pepper_group9)/launch/init_detector.launch">
-    </include>
+    <include file="$(find pepper_group9)/launch/init_detector.launch" />
+    
     <node name="pepper_start" pkg="pepper_group9" type="pepper_start.py" output="screen" />
     <node name="pepper_vision" pkg="pepper_group9" type="pepper_vision.py" output="screen" args="$(arg pip)"/>
     <node name="pepper_wakeup" pkg="pepper_group9" type="pepper_wakeup.py" output="screen" args="$(arg pip)"/>
