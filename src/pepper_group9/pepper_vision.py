@@ -4,16 +4,30 @@ from naoqi_driver.naoqi_node import NaoqiNode
 from pepper_group9.srv import Shot, ShotResponse
 from sensor_msgs.msg import Image
 
+# Class Vision extends NaoqiNode
+# Node that gives connection with the pepper camera and acquires image
+#
+# Class Attributes:
+# - nameId: ID of the pepper camera
+# - vision: proxy to the core module of ALVideoDevice
+# - s: Service pepper_vision_service related to the acquisition from camera
+#
 class Vision(NaoqiNode):
+    # Constructor of the class,
+    # which initializes pepper_vision node and 
+    # calls the connectNaoQi function
     def __init__(self):
         NaoqiNode.__init__(self,'pepper_vision')
         self.nameId = None
         self.connectNaoQi()
 
+    # Uses the vision proxy to subscribe the pepper camera
+    # and instantiates pepper_vision_service.
+    # error: if the acquisition of ALVideoDevice proxy fails
     def connectNaoQi(self):
         self.vision=self.get_proxy("ALVideoDevice")
         if self.vision is None:
-            exit(1)
+            rospy.logerr("Error in initialization of ALVideoDevice proxy!")
         kTopCamera = 0
         resolution = 2
         framerate = 5
@@ -22,6 +36,10 @@ class Vision(NaoqiNode):
         rospy.loginfo('Using camera: rgb camera. Subscriber name is %s .' % (self.nameId))
         self.s = rospy.Service('pepper_vision_service', Shot, self.shot)
 
+    # Takes a photo and sends it as Shot service's response
+    # param: 
+    # - data: set to None because is used as a trigger
+    # return: ShotResponse that contains the acquired image
     def shot(self, data=None):
         img_to_send = Image()
         image = self.vision.getImageRemote(self.nameId)
@@ -35,9 +53,11 @@ class Vision(NaoqiNode):
         rospy.loginfo('Sending image...')
         return ShotResponse(img_to_send)
     
+    #Unsubscribes the camera
     def shutdown_handle(self):
         self.vision.unsubscribe(self.nameId)
-        
+
+# Initializes the vision_node and define the shutdown_handle        
 if __name__=="__main__":
     vision_node = Vision()
     rospy.on_shutdown(vision_node.shutdown_handle)
