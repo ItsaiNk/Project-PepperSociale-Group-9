@@ -8,6 +8,7 @@
 ## 1.1. Team
 
 ## 1.2. Architecture
+![Architecture](src/pepper_group9/doc/Group_9_Graph.png)
 
 ## 1.3. Launch
     roslaunch pepper_group9 pepper_generic_group9.launch pip:=PEPPER_IP
