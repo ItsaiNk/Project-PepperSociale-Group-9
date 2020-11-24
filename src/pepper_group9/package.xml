@@ -7,9 +7,10 @@
   <!-- One maintainer tag required, multiple allowed, one person per tag -->
   <!-- Example:  -->
   <!-- <maintainer email="jane.doe@example.com">Jane Doe</maintainer> -->
-  <maintainer email="vincenzo@todo.todo">vincenzo</maintainer>
-
-
+  <maintainer email="v.vigliotti1@studenti.unisa.it">Vincenzo Vigliotti</maintainer>
+  <maintainer email="d.angellotto@studenti.unisa.it">Daniele Angellotto</maintainer>
+  <maintainer email="m.barbella5@studenti.unisa.it">Michele Barbella</maintainer>
+  <maintainer email="m.cavalcante@studenti.unisa.it">Marco Cavalcante</maintainer>
   <!-- One license tag required, multiple allowed, one license per tag -->
   <!-- Commonly used license strings: -->
   <!--   BSD, MIT, Boost Software License, GPLv2, GPLv3, LGPLv2.1, LGPLv3 -->
@@ -25,7 +26,10 @@
   <!-- Author tags are optional, multiple are allowed, one per tag -->
   <!-- Authors do not have to be maintainers, but could be -->
   <!-- Example: -->
-  <!-- <author email="jane.doe@example.com">Jane Doe</author> -->
+  <author email="v.vigliotti1@studenti.unisa.it">Vincenzo Vigliotti</author>
+  <author email="d.angellotto@studenti.unisa.it">Daniele Angellotto</author>
+  <author email="m.barbella5@studenti.unisa.it">Michele Barbella</author>
+  <author email="m.cavalcante@studenti.unisa.it">Marco Cavalcante</author>
 
 
   <!-- The *depend tags are used to specify dependencies -->
