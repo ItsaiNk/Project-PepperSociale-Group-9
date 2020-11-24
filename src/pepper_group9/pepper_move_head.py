@@ -42,8 +42,8 @@ class HeadController():
         self.s.joint_angles=[pitch, yaw]
         rospy.loginfo(self.s.joint_angles)
         self.pub_pepper.publish(self.s)
-        rospy.sleep(rospy.Duration(5.0))
-        self.pub_node.publish(done)
+        rospy.sleep(rospy.Duration(3.0))
+        self.pub_node.publish(True)
 
 # Initializes the node with name "head_movement_controller"
 if __name__=='__main__':

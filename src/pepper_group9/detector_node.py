@@ -8,17 +8,17 @@ from pepper_group9.srv import Say
 import ros_numpy
 from classmap import category_map as classmap
 
-# Calls the service "animated_say",
+# Calls the service "text_to_speech_service",
 # which lets Pepper say something you want 
 # param: labels - Specifies the labels of the objects detected by Pepper
 # param: position - Specifies where the objects are located in the scene (left, right or center)
 # returns: a Bool representing the success of the operation
 # throws: rospy.ServiceException if service call failed
-def animated_say_client(labels, position):
-    rospy.wait_for_service('animated_say')
+def text_to_speech_client(labels, position):
+    rospy.wait_for_service('text_to_speech_service')
     try:
-        animated_say = rospy.ServiceProxy('animated_say', Say)
-        resp = animated_say(labels, position)
+        text_to_speech = rospy.ServiceProxy('text_to_speech_service', Say)
+        resp = text_to_speech(labels, position)
         return resp.result
     except rospy.ServiceException as e:
         print("Service call failed: %s"%e)
@@ -33,7 +33,7 @@ def rcv_image(msg):
     detected_classes = []
     for c in detections['detection_classes']:
         detected_classes.append(classmap[c])
-    animated_say_client(detected_classes, msg.position)
+    text_to_speech_client(detected_classes, msg.position)
 
 
 # Initializes node with name "detector_node"

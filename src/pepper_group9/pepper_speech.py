@@ -3,16 +3,16 @@ import rospy
 from naoqi_driver.naoqi_node import NaoqiNode
 from pepper_group9.srv import Say, SayResponse
 
-# Class AnimatedSay, extends NaoqiNode
+# Class TextToSpeech, extends NaoqiNode
 # Phrase composition of what Pepper have to say after detection.
 # Class Attributes:
 # speech - ALTextToSpeech proxy
-# s - variable of 'animated_say' Service
-class AnimatedSay(NaoqiNode):
+# s - variable of 'TextToSpeech' Service
+class TextToSpeech(NaoqiNode):
 
-    # Initializes the NaoQi node with name "animated_speech"
+    # Initializes the NaoQi node with name "text_to_speech"
     def __init__(self):
-        NaoqiNode.__init__(self,'animated_speech')
+        NaoqiNode.__init__(self,'text_to_speech')
         self.connectNaoQi()
         pass
     
@@ -45,7 +45,8 @@ class AnimatedSay(NaoqiNode):
             phrase += " in front of me"
         else:
             phrase += " on the " + data.position
-        self.speech.say(phrase, "English")
+        phrase_with_velocity = "\RSPD=80\\" + phrase
+        self.speech.say(phrase_with_velocity, "English")
         rospy.loginfo("END: %s", phrase)
         return SayResponse(True)
     
@@ -54,12 +55,12 @@ class AnimatedSay(NaoqiNode):
     # voice customization. The result of the synthesis is sent to the 
     # robot's loudspeakers.
     #
-    # Creation of "animated_say" Service
+    # Creation of "text_to_speech_service" Service
     def connectNaoQi(self):
         self.speech=self.get_proxy("ALTextToSpeech")
-        self.s = rospy.Service('animated_say', Say, self.say)
+        self.s = rospy.Service('text_to_speech_service', Say, self.say)
 
 if __name__=="__main__":
-    say = AnimatedSay()
-    rospy.loginfo("Animated Speech node successfully started")
+    say = TextToSpeech()
+    rospy.loginfo("Text To Speech node successfully started")
     rospy.spin()
