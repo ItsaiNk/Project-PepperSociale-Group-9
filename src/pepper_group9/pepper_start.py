@@ -12,6 +12,7 @@ from pepper_group9.srv import StiffnessSrv, Shot
 # - pub_head_move: publisher for the topic "head_movement_start"
 # - sub_movement_done: subscriber for the topic "head_movement_done"
 # - pub_take_image: publisher for the topic "take_image_topic"
+# - sub_detector_done: subscriber for the topic "detector_loaded"
 #
 class PepperStart():
     # Constructor of the class
@@ -23,6 +24,8 @@ class PepperStart():
         self.count = 0
         self.pepper_stiffness_client()
 
+    # Callback of sub_detector_done, called when the detector is fully loaded.
+    # Starts the detection cycle.
     def detector_loaded(self,msg):
         if msg.data:
             self.pub_head_move.publish("reset")

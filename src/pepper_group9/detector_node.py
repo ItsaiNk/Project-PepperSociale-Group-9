@@ -38,12 +38,11 @@ def rcv_image(msg):
 
 # Initializes node with name "detector_node"
 pub = rospy.Publisher("detector_loaded", Bool, queue_size=1)
-#DET_PATH=os.path.join(os.path.dirname(__file__),'efficientdet_d1_coco17_tpu-32')
-DET_PATH=os.path.join(os.path.dirname(__file__),'ssd_mobilenet_v2_fpnlite_640x640_coco17_tpu-8')
+DET_PATH=os.path.join(os.path.dirname(__file__),'efficientdet_d1_coco17_tpu-32')
 mydetector = Detector(DET_PATH)
 rospy.init_node('detector_node')
 si = rospy.Subscriber("take_image_topic", DetectorMessage, rcv_image)
 rospy.loginfo("Detector node successfully started")
-rospy.sleep(0.01)
+rospy.sleep(0.01) #necessary in order to let the publish work
 pub.publish(True)
 rospy.spin()
