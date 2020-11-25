@@ -6,7 +6,9 @@ import numpy as np
 
 class Detector():
     def __init__(self,model_path):
+        tf.get_logger().setLevel('ERROR')
         self.detect_fn = tf.saved_model.load(model_path, )
+        tf.get_logger().setLevel('DEBUG')
 
     def __call__(self, img, threshold=0.5):
         img = img[:,:,::-1]
