@@ -17,6 +17,4 @@ src/naoqi_bridge
 
 src/pepper_meshes/
 
-src/vision_msgs/
-
 src/pepper_group9/__pycache__/
