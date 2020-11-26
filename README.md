@@ -1,6 +1,6 @@
 # README
 
-This repository contains the proposed solution for the assigned project "Pepper Sociale" in the course of Cognitive Robotics, master degree in Computer Engineering @ Università degli Studi di Salerno
+This repository contains the proposed solution for the assigned project "Pepper Sociale" in the course of Cognitive Robotics, master degree in Computer Engineering @ Università degli Studi di Salerno.
 
 - [README](#readme)
   - [Team](#team)
@@ -32,7 +32,7 @@ pynaoqi-python2.7-2.5.7.1-linux64
 ```
 
 ## Architecture
-The following scheme shows all the nodes, topics and services of the package and how they communicate
+The following scheme shows all the nodes, topics and services of the package and how they communicate:
 
 ![Architecture](src/pepper_group9/doc/Group_9_Graph.png)
 
@@ -44,7 +44,7 @@ We decided to use the EfficientDet D1 640x640 because it offers a good trade-off
 
 ## Launch
 
-To start the package, you can use the following command
+To start the package, you can use the following command:
 
     roslaunch pepper_group9 pepper_generic_group9.launch pip:=PEPPER_IP
 
