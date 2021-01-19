@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 import rospy
 from pepper_group9.msg import DetectorMessage
-from pepper_group9.srv import DetectService, DetectServiceResponse
+from pepper_group9.srv import DetectService, DetectServiceResponse, Say, SayResponse
 from std_msgs.msg import Bool
 
 # Class PepperCognitive
