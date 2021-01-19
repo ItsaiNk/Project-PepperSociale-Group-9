@@ -21,7 +21,8 @@ class TextToSpeech(NaoqiNode):
     # param: data - message of type DetectorMessage.msg
     # returns: SayResponse - Bool, response of Say.srv
     def say(self,data):
-        rospy.loginfo("START: %s %s", data.labels, data.position)
+        rospy.loginfo("NUMBER OF OBJECTS IN " + str(data.position) + ": " + str(len(data.labels)))
+        rospy.loginfo("Start: %s %s", data.labels, data.position)
         phrase = "I saw "
         label_occ = {}
         if len(data.labels) == 0:
@@ -47,7 +48,7 @@ class TextToSpeech(NaoqiNode):
             phrase += " on the " + data.position
         phrase_with_velocity = "\RSPD=80\\" + phrase
         self.speech.say(phrase_with_velocity, "English")
-        rospy.loginfo("END: %s", phrase)
+        rospy.loginfo("End: %s", phrase)
         return SayResponse(True)
     
     # ALTextToSpeech module allows the robot to speak.
