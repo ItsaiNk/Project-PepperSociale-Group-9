@@ -9,7 +9,7 @@ This repository contains the proposed solution for the assigned project "Pepper 
   - [Detector](#detector)
   - [Launch](#launch)
   - [How to use](#how-to-use)
-#- [How it works](#how-it-works)
+    - [How it works](#how-it-works)
   - [Project Structure](#project-structure)
 
 
