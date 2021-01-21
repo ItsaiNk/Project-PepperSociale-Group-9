@@ -1,48 +1,49 @@
 #!/usr/bin/env python3
 import os
 import rospy
-from pepper_group9.msg import DetectorMessage
-from std_msgs.msg import Bool
 from detector import Detector
-from pepper_group9.srv import Say
+from pepper_group9.srv import DetectService, DetectServiceResponse
 import ros_numpy
 from classmap import category_map as classmap
+import time
 
-# Calls the service "text_to_speech_service",
-# which lets Pepper say something you want 
-# param: labels - Specifies the labels of the objects detected by Pepper
-# param: position - Specifies where the objects are located in the scene (left, right or center)
-# returns: a Bool representing the success of the operation
-# throws: rospy.ServiceException if service call failed
-def text_to_speech_client(labels, position):
-    rospy.wait_for_service('text_to_speech_service')
-    try:
-        text_to_speech = rospy.ServiceProxy('text_to_speech_service', Say)
-        resp = text_to_speech(labels, position)
-        return resp.result
-    except rospy.ServiceException as e:
-        print("Service call failed: %s"%e)
+# Class DetectorService
+# Detect objects in an image
+# Class attributes:
+# mydetector - attribute of class Detector
+# service - the detection service
+class DetectorService():
 
-# Receives an image and executes an object detection
-# It uses the classmap in the file classmap.py to map the detected objects with the correct label
-# param: msg - The message containing the Image on which perform the detection
-# throws: rospy.ServiceException if service call failed
-def rcv_image(msg):
-    image = ros_numpy.numpify(msg.image)
-    detections = mydetector(image)
-    detected_classes = []
-    for c in detections['detection_classes']:
-        detected_classes.append(classmap[c])
-    text_to_speech_client(detected_classes, msg.position)
+    # Constructor of the class
+    def __init__(self):
+        DET_PATH=os.path.join(os.path.dirname(__file__),'ssd_mobilenet_v2_fpnlite_640x640_coco17_tpu-8')
+        self.mydetector = Detector(DET_PATH)
+        self.service = rospy.Service('detector_service', DetectService, self.detect_handle)
 
+    # Receives an image and executes an object detection
+    # It uses the classmap in the file classmap.py to map the detected objects with the correct label
+    # param: req - The request message containing the Image on which perform the detection
+    # returns: DetectServiceResponse - string[] labels, float32[] boxes, response of DetectService.srv
+    def detect_handle(self, req):
+        image = ros_numpy.numpify(req.image)
+        start_time = time.time()
+        detections = self.mydetector(image)
+        end_time = time.time()
+        rospy.loginfo("DETECTION TIME: " + str((end_time-start_time) % 60) + " SECONDS.")
+        detected_classes = []
+        detected_boxes = []
+        for c in detections['detection_classes']:
+            detected_classes.append(classmap[c])
+        for c in detections['detection_boxes']:
+            for v in c:
+                detected_boxes.append(float(v))
+        return DetectServiceResponse(detected_classes, detected_boxes)
 
-# Initializes node with name "detector_node"
-pub = rospy.Publisher("detector_loaded", Bool, queue_size=1)
-DET_PATH=os.path.join(os.path.dirname(__file__),'efficientdet_d1_coco17_tpu-32')
-mydetector = Detector(DET_PATH)
-rospy.init_node('detector_node')
-si = rospy.Subscriber("take_image_topic", DetectorMessage, rcv_image)
-rospy.loginfo("Detector node successfully started")
-rospy.sleep(0.01) #necessary in order to let the publish work
-pub.publish(True)
-rospy.spin()
+if __name__ == "__main__":
+    rospy.init_node('detector_node')
+    start_time = time.time()
+    detector = DetectorService()
+    end_time = time.time()
+    rospy.loginfo("DETECTION LOADING TIME: " + str((end_time-start_time) % 60) + " SECONDS.")
+    rospy.loginfo("Detector node successfully started")
+    rospy.spin()

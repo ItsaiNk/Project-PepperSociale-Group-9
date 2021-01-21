@@ -11,4 +11,5 @@
     <node name="pepper_speech" pkg="pepper_group9" type="pepper_speech.py" output="screen" args="$(arg pip)"/>
     <node name="pepper_move_head" pkg="pepper_group9" type="pepper_move_head.py" output="screen" />
     <node name="detector_node" pkg="pepper_group9" type="detector_node.py" output="screen" />
+    <node name="pepper_cognitive" pkg="pepper_group9" type="pepper_cognitive.py" output="screen" />
 </launch>
